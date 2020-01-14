@@ -1,7 +1,7 @@
 package com.shivam.users.socialmedia.controller.user;
 
 import com.shivam.users.socialmedia.model.registeruser.User;
-import com.shivam.users.socialmedia.service.UsersServiceLayerImp;
+import com.shivam.users.socialmedia.service.user.UsersServiceLayerImp;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;

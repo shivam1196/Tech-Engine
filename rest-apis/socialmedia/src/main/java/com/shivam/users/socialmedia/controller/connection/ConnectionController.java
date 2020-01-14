@@ -2,6 +2,7 @@ package com.shivam.users.socialmedia.controller.connection;
 
 
 import com.shivam.users.socialmedia.model.connection.Connection;
+import com.shivam.users.socialmedia.model.connection.requestmodel.AcceptConnectionRequest;
 import com.shivam.users.socialmedia.model.connection.requestmodel.GetConnectionRequest;
 import com.shivam.users.socialmedia.model.connection.requestmodel.SetConnectionRequest;
 import com.shivam.users.socialmedia.service.connection.ConnectionServiceLayerImp;
@@ -39,6 +40,11 @@ public class ConnectionController {
   public ResponseEntity<List<Connection>> getAllConnections(){
     List<Connection> allConnections = connectionServiceLayerImp.findAllConnections();
     return new ResponseEntity<>(allConnections,HttpStatus.OK);
+  }
+  @PostMapping(value = "/acceptConnection", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<String> acceptConnectionRequest(@RequestBody AcceptConnectionRequest acceptConnectionRequest){
+    connectionServiceLayerImp.acceptConnection(acceptConnectionRequest);
+    return new ResponseEntity<>("Connection Added",HttpStatus.OK);
   }
 
 }

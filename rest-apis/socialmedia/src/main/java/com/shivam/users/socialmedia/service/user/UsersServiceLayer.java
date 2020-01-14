@@ -1,4 +1,4 @@
-package com.shivam.users.socialmedia.service;
+package com.shivam.users.socialmedia.service.user;
 
 import com.shivam.users.socialmedia.model.registeruser.User;
 import java.util.List;

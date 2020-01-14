@@ -1,6 +1,7 @@
 package com.shivam.users.socialmedia.service.connection;
 
 import com.shivam.users.socialmedia.model.connection.Connection;
+import com.shivam.users.socialmedia.model.connection.requestmodel.AcceptConnectionRequest;
 import com.shivam.users.socialmedia.model.connection.requestmodel.SetConnectionRequest;
 import com.shivam.users.socialmedia.repository.ConnectionRepository;
 import java.util.ArrayList;
@@ -16,7 +17,12 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
 
   @Override
   public void addConnectionRequest(SetConnectionRequest setConnectionRequest) {
+    Optional<Connection> checkConnection = connectionRepository.findConnectionByUserName(setConnectionRequest.getRequestedUserName());
+    if(!checkConnection.isPresent()) {
       connectionRepository.save(setUpConnection(setConnectionRequest));
+    }else{
+        connectionRepository.save(addConnection(setConnectionRequest,checkConnection.get()));
+    }
 
 
   }
@@ -31,6 +37,16 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
 
   }
 
+  private Connection addConnection(SetConnectionRequest setConnectionRequest, Connection connection){
+    List<String> connectionsId = connection.getConnectionIds();
+    if(connectionsId == null){
+      connectionsId = new ArrayList<>();
+    }
+    connectionsId.add(setConnectionRequest.getSenderUserName());
+    connection.setConnectionIds(connectionsId);
+    return connection;
+  }
+
 
   @Override
   public Optional<Connection> getConnectionRequest(String userName) {
@@ -42,5 +58,53 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
   @Override
   public List<Connection> findAllConnections() {
     return connectionRepository.findAll();
+  }
+
+  @Override
+  public void acceptConnection(AcceptConnectionRequest acceptConnectionRequest) {
+      acceptUserConnection(acceptConnectionRequest);
+      acceptSenderConnection(acceptConnectionRequest);
+
+
+  }
+
+  private void acceptUserConnection(AcceptConnectionRequest acceptConnectionRequest){
+    Connection connection = connectionRepository.findConnectionByUserName(acceptConnectionRequest.getCurrentUserName()).get();
+    List<String> pendingConnection = connection.getConnectionIds();
+    List<String> addedConnection = connection.getAddedConnectionsUserName();
+    if(addedConnection == null){
+      addedConnection = new ArrayList<>();
+      addedConnection.add(acceptConnectionRequest.getAcceptedUserName());
+    }else{
+      addedConnection.add(acceptConnectionRequest.getAcceptedUserName());
+    }
+    pendingConnection.remove(acceptConnectionRequest.getAcceptedUserName());
+    connection.setConnectionIds(pendingConnection);
+    connection.setAddedConnectionsUserName(addedConnection);
+    connectionRepository.save(connection);
+  }
+  private void acceptSenderConnection(AcceptConnectionRequest acceptConnectionRequest){
+    Optional<Connection> connection = connectionRepository.findConnectionByUserName(acceptConnectionRequest.getAcceptedUserName());
+    if(connection.isPresent()){
+      List<String> addedIds = connection.get().getAddedConnectionsUserName();
+      if(addedIds == null){
+        addedIds = new ArrayList<>();
+      }
+      addedIds.add(acceptConnectionRequest.getCurrentUserName());
+      connection.get().setAddedConnectionsUserName(addedIds);
+      connectionRepository.save(connection.get());
+    }else{
+      Connection newConnection = new Connection();
+      newConnection.setUserName(acceptConnectionRequest.getAcceptedUserName());
+      List<String> addedConnection = new ArrayList<>();
+      addedConnection.add(acceptConnectionRequest.getCurrentUserName());
+      newConnection.setAddedConnectionsUserName(addedConnection);
+      connectionRepository.save(newConnection);
+    }
+  }
+
+  @Override
+  public void rejectConnection(AcceptConnectionRequest acceptConnectionRequest) {
+  //TODO: Implement Reject Connection Scenarios
   }
 }
