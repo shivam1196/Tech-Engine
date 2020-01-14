@@ -23,18 +23,24 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
 
   private Connection setUpConnection(SetConnectionRequest setConnectionRequest){
     Connection connection = new Connection();
-    connection.setId(setConnectionRequest.getUserId());
-    connection.setFirstName(setConnectionRequest.getFirstName());
-    connection.setLastName(setConnectionRequest.getLastName());
+    connection.setUserName(setConnectionRequest.getRequestedUserName());
     List<String> connectionIds = new ArrayList<>();
-    connectionIds.add(setConnectionRequest.getConnectionId());
+    connectionIds.add(setConnectionRequest.getSenderUserName());
     connection.setConnectionIds(connectionIds);
     return connection;
+
+  }
+
+
+  @Override
+  public Optional<Connection> getConnectionRequest(String userName) {
+    System.out.println("Connection Id: "+userName);
+    System.out.println("Connection Id: "+ connectionRepository.findConnectionByUserName(userName).toString());
+     return connectionRepository.findConnectionByUserName(userName);
   }
 
   @Override
-  public Optional<Connection> getConnectionRequest(String userId) {
-    System.out.println("Connection Id: "+ connectionRepository.findById(userId).toString());
-     return connectionRepository.findById(userId);
+  public List<Connection> findAllConnections() {
+    return connectionRepository.findAll();
   }
 }

@@ -1,18 +1,18 @@
 package com.shivam.users.socialmedia.model.connection.requestmodel;
 
 public class GetConnectionRequest {
-  private String connectionId;
+  private String userName;
 
-  public GetConnectionRequest(String connectionId) {
-    this.connectionId = connectionId;
+  public GetConnectionRequest(String userName) {
+    this.userName = userName;
   }
 
-  public String getConnectionId() {
-    return connectionId;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setConnectionId(String connectionId) {
-    this.connectionId = connectionId;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public GetConnectionRequest() {

@@ -1,51 +1,33 @@
 package com.shivam.users.socialmedia.model.connection.requestmodel;
 
 public class SetConnectionRequest {
-  private String userId;
-  private String firstName;
-  private String lastName;
-  private String connectionId;
+  private String requestedUserName;
+  private String senderUserName;
 
-  public SetConnectionRequest(String userId, String firstName, String lastName,
-      String connectionId) {
-    this.userId = userId;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.connectionId = connectionId;
+  public SetConnectionRequest(String requestedUserName,
+      String senderUserName) {
+    this.requestedUserName = requestedUserName;
+    this.senderUserName = senderUserName;
   }
 
   public SetConnectionRequest() {
   }
 
-  public String getUserId() {
-    return userId;
+  public String getRequestedUserName() {
+    return requestedUserName;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setRequestedUserName(String requestedUserName) {
+    this.requestedUserName = requestedUserName;
   }
 
-  public String getFirstName() {
-    return firstName;
+
+
+  public String getSenderUserName() {
+    return senderUserName;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public String getConnectionId() {
-    return connectionId;
-  }
-
-  public void setConnectionId(String connectionId) {
-    this.connectionId = connectionId;
+  public void setSenderUserName(String senderUserName) {
+    this.senderUserName = senderUserName;
   }
 }

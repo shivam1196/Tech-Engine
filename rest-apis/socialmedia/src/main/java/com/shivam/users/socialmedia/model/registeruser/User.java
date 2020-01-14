@@ -17,6 +17,10 @@ public class User {
 
   private String gender;
 
+
+
+  private String userName;
+
   private int age;
 
   private List<String> areaOfInterest;
@@ -29,21 +33,24 @@ public class User {
     this.areaOfInterest = areaOfInterest;
   }
 
+  public String getUserName() {
+    return userName;
+  }
 
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-
-  public User(String id, String firstName, String lastName, String gender, int age,
+  public User(String id, String firstName, String lastName, String gender, String userName, int age,
       List<String> areaOfInterest) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.gender = gender;
+    this.userName = userName;
     this.age = age;
     this.areaOfInterest = areaOfInterest;
   }
-
-
-
   public User(){
 
   }

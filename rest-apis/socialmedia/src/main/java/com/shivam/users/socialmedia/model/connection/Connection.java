@@ -10,28 +10,36 @@ public class Connection {
 
   @Id
   private String id;
-
-  private String firstName;
-  private String lastName;
+  private String userName;
   private List<String> connectionIds;
-  private List<String> addedConnections;
+  private List<String> addedConnectionsUserName;
 
 
-  public Connection(String id, String firstName, String lastName,
-      List<String> connectionIds, List<String> addedConnections) {
+
+
+  public Connection(String id, String userName,
+      List<String> connectionIds, List<String> addedConnectionsUserName) {
     this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
+    this.userName = userName;
+
     this.connectionIds = connectionIds;
-    this.addedConnections = addedConnections;
+    this.addedConnectionsUserName = addedConnectionsUserName;
   }
 
-  public List<String> getAddedConnections() {
-    return addedConnections;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setAddedConnections(List<String> addedConnections) {
-    this.addedConnections = addedConnections;
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public List<String> getAddedConnectionsUserName() {
+    return addedConnectionsUserName;
+  }
+
+  public void setAddedConnectionsUserName(List<String> addedConnectionsUserName) {
+    this.addedConnectionsUserName = addedConnectionsUserName;
   }
 
   public String getId() {
@@ -42,21 +50,6 @@ public class Connection {
     this.id = id;
   }
 
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
 
   public List<String> getConnectionIds() {
     return connectionIds;
@@ -74,9 +67,9 @@ public class Connection {
   public String toString() {
     return "Connection{" +
         "id='" + id + '\'' +
-        ", firstName='" + firstName + '\'' +
-        ", lastName='" + lastName + '\'' +
+        ", userName='" + userName + '\'' +
         ", connectionIds=" + connectionIds +
+        ", addedConnectionsUserName=" + addedConnectionsUserName +
         '}';
   }
 }
