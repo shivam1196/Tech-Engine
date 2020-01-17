@@ -1,10 +1,12 @@
 package com.shivam.users.socialmedia.controller.user;
 
 import com.shivam.users.socialmedia.model.registeruser.User;
+import com.shivam.users.socialmedia.model.registeruser.requestmodel.UserProfileRequest;
 import com.shivam.users.socialmedia.service.user.UsersServiceLayerImp;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,6 +35,12 @@ public class UserController {
   @GetMapping("/getAllUsers")
   public ResponseEntity<List<User>> getAllUsers(){
     return new ResponseEntity<List<User>>(usersServiceLayerImp.findAllUser(),HttpStatus.OK);
+  }
+
+  @PostMapping(value = "/getProfile", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Optional<User>> getUserProfile(@RequestBody UserProfileRequest userProfileRequest){
+    Optional<User> userProfile = usersServiceLayerImp.findUserbyUserName(userProfileRequest.getRequestedUserName());
+    return new ResponseEntity<>(userProfile,HttpStatus.OK);
   }
 
 }
