@@ -1,9 +1,11 @@
-package com.shivam.users.socialmedia.service.connection;
+package com.shivam.users.socialmedia.service.userconnections;
 
 import com.shivam.users.socialmedia.model.connection.Connection;
 import com.shivam.users.socialmedia.model.connection.requestmodel.AcceptConnectionRequest;
 import com.shivam.users.socialmedia.model.connection.requestmodel.SetConnectionRequest;
+import com.shivam.users.socialmedia.model.registeruser.User;
 import com.shivam.users.socialmedia.repository.ConnectionRepository;
+import com.shivam.users.socialmedia.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
+public class UsersConnectionConnectionServiceLayerImp implements UsersConnectionServiceLayer {
+  @Autowired
+  UserRepository userRepository;
+
   @Autowired
   private ConnectionRepository connectionRepository;
 
@@ -21,7 +26,7 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
     if(!checkConnection.isPresent()) {
       connectionRepository.save(setUpConnection(setConnectionRequest));
     }else{
-        connectionRepository.save(addConnection(setConnectionRequest,checkConnection.get()));
+      connectionRepository.save(addConnection(setConnectionRequest,checkConnection.get()));
     }
 
 
@@ -52,7 +57,7 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
   public Optional<Connection> getConnectionRequest(String userName) {
     System.out.println("Connection Id: "+userName);
     System.out.println("Connection Id: "+ connectionRepository.findConnectionByUserName(userName).toString());
-     return connectionRepository.findConnectionByUserName(userName);
+    return connectionRepository.findConnectionByUserName(userName);
   }
 
   @Override
@@ -62,8 +67,8 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
 
   @Override
   public void acceptConnection(AcceptConnectionRequest acceptConnectionRequest) {
-      acceptUserConnection(acceptConnectionRequest);
-      acceptSenderConnection(acceptConnectionRequest);
+    acceptUserConnection(acceptConnectionRequest);
+    acceptSenderConnection(acceptConnectionRequest);
 
 
   }
@@ -105,6 +110,23 @@ public class ConnectionServiceLayerImp implements ConnectionServiceLayer {
 
   @Override
   public void rejectConnection(AcceptConnectionRequest acceptConnectionRequest) {
-  //TODO: Implement Reject Connection Scenarios
+    //TODO: Implement Reject Connection Scenarios
   }
+
+  @Override
+  public void registerUser(User user) {
+    userRepository.save(user);
+  }
+
+  @Override
+  public List<User> findAllUser() {
+    return userRepository.findAll();
+  }
+
+  @Override
+  public Optional<User> findUserbyUserName(String userName) {
+    return userRepository.findUserByUserName(userName);
+  }
+
+
 }
