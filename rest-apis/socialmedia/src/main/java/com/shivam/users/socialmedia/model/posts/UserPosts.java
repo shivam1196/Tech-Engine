@@ -42,7 +42,7 @@ public class UserPosts {
     this.id = id;
   }
 
-  public List<Posts> getUserPosts() {
+  public ArrayList<Posts> getUserPosts() {
     return userPosts;
   }
 

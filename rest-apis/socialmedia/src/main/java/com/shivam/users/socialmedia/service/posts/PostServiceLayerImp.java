@@ -24,14 +24,22 @@ public class PostServiceLayerImp implements PostServiceLayer {
   }
 
   private UserPosts addUserPosts(Posts addPosts){
-    UserPosts userPosts = new UserPosts();
-    String userName = addPosts.getUserName();
-    System.out.println("Post Message: "+ addPosts.getPostMessage());
-    userPosts.setUserName(userName);
-    ArrayList<Posts> userPost = new ArrayList<>();
-    userPost.add(addPosts);
-    userPosts.setUserPosts(userPost);
-    return userPosts;
+    Optional<UserPosts> posts = postRepository.findPostByUserName(addPosts.getUserName());
+    if(!posts.isPresent()) {
+      UserPosts userPosts = new UserPosts();
+      String userName = addPosts.getUserName();
+      System.out.println("Post Message: " + addPosts.getPostMessage());
+      userPosts.setUserName(userName);
+      ArrayList<Posts> userPost = new ArrayList<>();
+      userPost.add(addPosts);
+      userPosts.setUserPosts(userPost);
+      return userPosts;
+    }else{
+      ArrayList<Posts> postsArrayList = posts.get().getUserPosts();
+      postsArrayList.add(addPosts);
+      posts.get().setUserPosts(postsArrayList);
+      return posts.get();
+    }
 
   }
 }
