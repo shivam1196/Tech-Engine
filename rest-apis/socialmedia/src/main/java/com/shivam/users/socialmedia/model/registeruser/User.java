@@ -17,6 +17,8 @@ public class User {
 
   private String gender;
 
+  private String password;
+
 
 
   private String userName;
@@ -41,16 +43,26 @@ public class User {
     this.userName = userName;
   }
 
-  public User(String id, String firstName, String lastName, String gender, String userName, int age,
-      List<String> areaOfInterest) {
+  public User(String id, String firstName, String lastName, String gender, String password,
+      String userName, int age, List<String> areaOfInterest) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.gender = gender;
+    this.password = password;
     this.userName = userName;
     this.age = age;
     this.areaOfInterest = areaOfInterest;
   }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
   public User(){
 
   }

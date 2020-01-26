@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,10 +31,20 @@ public class UserConnectionController {
   @Autowired
   private UsersConnectionConnectionServiceLayerImp usersConnectionServiceLayerImp;
 
+  @Autowired
+  BCryptPasswordEncoder bCryptPasswordEncoder;
+
   @PostMapping(value = "/registerUser",consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> registerUser(@RequestBody User user){
+  public ResponseEntity<User> registerUser(@RequestBody User user){
     usersConnectionServiceLayerImp.registerUser(user);
-    return new ResponseEntity<String>("User Registered", HttpStatus.OK);
+    String password = user.getPassword();
+    if(password.length() < 7){
+      return ResponseEntity.badRequest().build();
+    }
+    user.setPassword(bCryptPasswordEncoder.encode(password));
+    usersConnectionServiceLayerImp.registerUser(user);
+    return ResponseEntity.ok(user);
+
   }
 
   @GetMapping("/getAllUsers")
