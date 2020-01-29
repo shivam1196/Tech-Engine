@@ -32,4 +32,9 @@ public class PostsController {
     Optional<UserPosts> userPosts = postServiceLayerImp.getUser(userName);
     return new ResponseEntity<Optional<UserPosts>>(userPosts,HttpStatus.OK);
   }
+  @PostMapping(value = "/addComment", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Optional<UserPosts>> addComment(@RequestBody Posts posts){
+    Optional<UserPosts> userPosts = postServiceLayerImp.addComment(posts);
+    return new ResponseEntity<Optional<UserPosts>>(userPosts,HttpStatus.OK);
+  }
 }

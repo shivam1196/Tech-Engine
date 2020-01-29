@@ -23,8 +23,26 @@ public class PostServiceLayerImp implements PostServiceLayer {
     return postRepository.findPostByUserName(userName);
   }
 
+  @Override
+  public Optional<UserPosts> addComment(Posts addCommentToPost) {
+    Optional<UserPosts> userPosts = postRepository.findPostByUserName(addCommentToPost.getUserName());
+    if(userPosts.isPresent() && userPosts.get().getUserPosts().get(0).getUserComments()  == null){
+      List<String> userComment = new ArrayList<>();
+      userComment.add(addCommentToPost.getUserComments().get(0));
+      userPosts.get().getUserPosts().get(0).setUserComments(userComment);
+    }else{
+      List<String> userComment = userPosts.get().getUserPosts().get(0).getUserComments();
+      userComment.add(addCommentToPost.getUserComments().get(0));
+      userPosts.get().getUserPosts().get(0).setUserComments(userComment);
+    }
+    postRepository.save(userPosts.get());
+    return userPosts;
+  }
+
   private UserPosts addUserPosts(Posts addPosts){
     Optional<UserPosts> posts = postRepository.findPostByUserName(addPosts.getUserName());
+    String postId = String.valueOf(System.currentTimeMillis());
+    addPosts.setPostId(postId);
     if(!posts.isPresent()) {
       UserPosts userPosts = new UserPosts();
       String userName = addPosts.getUserName();

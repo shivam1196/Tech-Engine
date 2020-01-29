@@ -9,4 +9,6 @@ public interface PostServiceLayer {
 
   Optional<UserPosts> getUser(String userName);
 
+  Optional<UserPosts> addComment(Posts addCommentToPost);
+
 }

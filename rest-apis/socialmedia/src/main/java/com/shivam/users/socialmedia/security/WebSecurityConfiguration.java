@@ -2,6 +2,8 @@ package com.shivam.users.socialmedia.security;
 
 
 import static com.shivam.users.socialmedia.security.SecurityConstants.SIGN_UP_URL;
+import static com.shivam.users.socialmedia.security.SecurityConstants.SWAGGER_UI;
+import static com.shivam.users.socialmedia.security.SecurityConstants.SWAGGER_URL;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -29,7 +31,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable().authorizeRequests()
-        .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+        .antMatchers(HttpMethod.POST,SIGN_UP_URL,SWAGGER_URL,SWAGGER_UI).permitAll()
         .anyRequest().authenticated()
         .and()
         .addFilter(new JWTAuthenticationFilter(authenticationManager()))

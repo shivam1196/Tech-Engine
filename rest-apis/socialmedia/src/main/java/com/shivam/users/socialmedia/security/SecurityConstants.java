@@ -6,4 +6,7 @@ public class SecurityConstants {
   public static final String TOKEN_PREFIX = "Bearer ";
   public static final String HEADER_STRING = "Authorization";
   public static final String SIGN_UP_URL = "/registerUser";
+  public static final String SWAGGER_URL = "/v2/api-docs";
+  public static final String SWAGGER_UI="/swagger-ui.html";
+
 }

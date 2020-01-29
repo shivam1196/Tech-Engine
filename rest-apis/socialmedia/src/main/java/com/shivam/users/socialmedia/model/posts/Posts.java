@@ -7,24 +7,34 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Posts {
 
-
+  private String postId;
   private String userName;
   private String postMessage;
   private List<String> userComments;
   private List<String> userLikes;
 
-  public Posts( String userName, String postMessage,
+
+  public Posts(String postId, String userName, String postMessage,
       List<String> userComments, List<String> userLikes) {
+    this.postId = postId;
     this.userName = userName;
     this.postMessage = postMessage;
     this.userComments = userComments;
     this.userLikes = userLikes;
   }
 
+
   public Posts(){
 
   }
 
+  public String getPostId() {
+    return postId;
+  }
+
+  public void setPostId(String postId) {
+    this.postId = postId;
+  }
 
   public String getUserName() {
     return userName;
