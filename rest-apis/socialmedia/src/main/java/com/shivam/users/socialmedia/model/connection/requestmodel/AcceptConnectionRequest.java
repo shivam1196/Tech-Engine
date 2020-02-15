@@ -9,6 +9,9 @@ public class AcceptConnectionRequest {
     this.acceptedUserName = acceptedUserName;
   }
 
+  public AcceptConnectionRequest() {
+  }
+
   public String getCurrentUserName() {
     return currentUserName;
   }
